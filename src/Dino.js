@@ -10,7 +10,8 @@ class Dino extends Component {
   constructor(props) {
     super()
     this.state = {
-      body: props.body
+      body: props.body,
+      tempBody: ''
     }
     // this.handleBodyEdit = this.handleBodyEdit.bind(this)
   }
@@ -21,6 +22,10 @@ class Dino extends Component {
     this.setState({body: input})
   }
 
+  handleFormEdit = e => {
+    e.preventDefault()
+    this.setState({body: this.state.tempBody})
+  }
 
   render() {
     let allComments = this.props.comments.map((c, i)=> {
@@ -31,7 +36,14 @@ class Dino extends Component {
         <h1>{this.props.title}</h1>
         <h4>By: {this.props.author}</h4>
         <p>{this.state.body}</p>
-        <button onClick={this.handleBodyEdit}>Edit the body of this article</button>
+        <hr />
+        <form onSubmit={this.handleFormEdit}>
+          <h5>New Body Content</h5>
+          <input type="text" name="body" onChange={e => this.setState({tempBody: e.target.value})}/>
+          <input type="submit" />
+        {/* // <button onClick={this.handleBodyEdit}>Edit the body of this article</button> */}
+        </form>
+
         {allComments}
       </>
     );
